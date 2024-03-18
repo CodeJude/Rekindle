@@ -17,6 +17,10 @@ app.use(cors());
 // routes
 app.use("/posts", postRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Hello, Welcome to Rekindle API");
+});
+
 // connect to db
 mongoose
   .connect(process.env.MONGO_URI, {
