@@ -1,11 +1,11 @@
+import "dotenv/config";
+
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 
 import postRoutes from "./routes/posts.js";
-dotenv.config();
+import connectDB from "./util/db.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,18 +18,10 @@ app.use(cors());
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Hello, Welcome to Rekindle API");
+  res.json("Hello, Welcome to Rekindle API");
 });
 
-// connect to db
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() =>
-    app.listen(PORT, () =>
-      console.log(`Connected to db, Server running on port: ${PORT}`)
-    )
-  )
-  .catch((err) => console.log(err.message));
+app.listen(PORT, async () => {
+  await connectDB();
+  console.log(`Server is running on port: ${PORT}`);
+});
