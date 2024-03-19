@@ -1,6 +1,5 @@
 import fs from "fs";
 import mongoose from "mongoose";
-import sharp from "sharp";
 
 import PostMessage from "../models/postModels.js";
 
